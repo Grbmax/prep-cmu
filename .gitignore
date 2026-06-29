@@ -1,0 +1,35 @@
+# Compiled binaries (no extension, sit next to .cpp files)
+swap
+swap_ints
+max_elem
+squares
+dangling
+two_sum_sorted
+two_sum_unsorted
+main
+
+# Debug symbols
+*.dSYM/
+
+# Object/build files
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# Editor / IDE noise
+.DS_Store
+excalidraw.log
+*.swp
+*.swo
+
+# Sanitizer artifacts
+*.log
+
+# Local-only Claude state (per-machine, not portable)
+.claude/
+cpp/.claude/
+
+# Keep .vscode (compiler config) — comment out next line if you don't want it
+# .vscode/
