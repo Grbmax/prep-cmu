@@ -13,7 +13,7 @@ that field drives what we drill next.
 
 | Track                        | Current position                          | Confidence (1-5) | Last touched |
 |------------------------------|-------------------------------------------|------------------|--------------|
-| **DSA — Striver A2Z (C++)**  | Step 3 Arrays — 2/455 (both Two Sum variants) | 2            | 2026-06-19   |
+| **DSA — Striver A2Z (C++)**  | Phase 0.1 done (largest element) — 3/455 sheet total | 2            | 2026-08-27   |
 | **15-513 Systems (C)**       | Not logged here yet — L0/L1 window is open | -                | -            |
 | **17-614 Formal Methods**    | Propositional logic — De Morgan check open | 3                | 2026-06-20   |
 | C++ fluency (supporting)     | Ex. 1-4 done; Ex. 5 (`int**` append) open  | 3                | 2026-05-27   |
@@ -29,7 +29,8 @@ Carried forward from the log below. These do not clear until they stop recurring
    unsorted). Highest-priority catch.
 2. **Off-by-one** (`<=` vs `<`) — plus the "pattern twin" habit: fix one loop, immediately
    check its sibling.
-3. **`int` vs `size_t`** for indices; initialize-on-declare.
+3. **`int` vs `size_t`** for indices; initialize-on-declare. Recurred again 2026-08-27
+   (loop index AND an `arr.size() < 0` guard) — now the most active target.
 4. **Affirming the consequent** (Formal Methods) — recognizing implication shapes across
    negated phrasings.
 
@@ -47,6 +48,37 @@ Carried forward from the log below. These do not clear until they stop recurring
 ---
 
 ## Log
+
+### 2026-08-27 — DSA — Phase 0.1 — Largest element in an array
+- **Covered:** first DSA session since 2026-06-20 (~2 month gap). Rebuilt Big-O from
+  scratch again (O(n)/O(1) recall came back clean after one prompt — not gone, just
+  needed a nudge). Solved largest-element: linear scan, running max seeded from
+  `arr[0]` (not `0` — caught the all-negative bug himself once asked to trace it by
+  hand). Restructured from inline `main()` code into a proper `const vector<int>&`
+  solution function + driver, matching the sheet's per-problem shape going forward.
+  Installed and configured `clang-format` (Google-based, repo-root `.clang-format`).
+- **Got right:** O(n)/O(1) complexity from memory, unprompted reasoning ("we hold one
+  element"). Self-corrected the `largest = 0` seed bug after being asked to trace an
+  all-negative input by hand — didn't need the answer given. Correctly reasoned
+  `const vector<int>&` avoids both the copy (value) and the mutation risk (plain ref)
+  once the three options were laid out.
+- **Struggled with:** (1) reached for `std::array<int,4>` instead of the assigned
+  `vector<int>` mechanic — corrected once flagged. (2) `int i` vs `size_t` for the
+  loop index AGAIN — compiler's `-Wsign-compare`/`-Wsign-conversion` caught it live;
+  he named the fix correctly unprompted once shown the warning. (3) first guard
+  attempt was `if (arr.size() < 0)` — same unsigned-can't-be-negative gap as the
+  index bug, same session; recognized it once asked to reconsider. (4) general
+  recall of pre-semester exercises (Ex.1-4, Two Sum both variants) is largely gone —
+  recapped in-session, not re-drilled today.
+- **Quiz result:** 2/2 on Big-O gate (O(n) time, O(1) space, both reasoned correctly).
+- **Revisit next session:** `int` vs `size_t` is still not automatic — 6th+ recurrence
+  across sessions, stays the #1 active target alongside value-vs-index. Consider a
+  30-second reflex check ("what type does `.size()` return?") before every problem
+  in Phase 0 until it stops needing a prompt.
+- **Complexity recall:** O(n) time / O(1) space, correct and unprompted-after-nudge.
+- **Pattern named:** linear scan / single-pass reduction — not written to `patterns/`
+  (too foundational to need a note; it's the base case other patterns build on).
+  Idiomatic version shown: `*max_element(arr.begin(), arr.end())`.
 
 ### 2026-05-27 (session 1, cont.) — C/C++ — Exercise 2 (max_elem, references & dangling)
 - **Covered:** `std::vector<int>` basics (`.size()`, `[]`, `.push_back`), `const&`
@@ -164,27 +196,20 @@ Carried forward from the log below. These do not clear until they stop recurring
   no verbatim restatements, no closing recap fluff. Added [[feedback-token-economy]]
   memory + applied for the rest of the session.
 
-### >>> NEXT SESSION START HERE <<< (revised 2026-08-27)
+### >>> NEXT SESSION START HERE <<< (revised 2026-08-27, post Phase 0.1)
 
-**Priority order has changed.** Recruiting clock now sets the agenda — see `ROADMAP.md`.
-
-1. **DSA first.** Open `dsa/README.md`, agree the C++ decision is final, then start
-   Striver Step 4 (Binary Search) — highest interview yield per problem on the sheet,
-   and you already have two-pointer basics banked. First target: the "binary search on
-   the answer" family, which is the sub-pattern most candidates never recognize.
-   Alternative if you want a gentler restart: finish Step 3 (Arrays) easies to rebuild
-   C++ typing speed first.
-2. **Bit manipulation early.** Striver Step 8 overlaps 15-513 Lab 1 (Data) directly.
-   Doing them in the same week is a free double-dip — schedule it now, not in Spring.
+1. **DSA — Phase 0.2.** `dsa/STRIVER-TRACKER.md` — "Second largest without sorting."
+   Mechanic: two accumulators + the "pattern twin" check (fix one loop, immediately
+   check its sibling). Quiz Big-O and the `.size()` return type before starting —
+   both are now recovering but not yet automatic.
+2. **`int` vs `size_t` is the live #1 target**, ahead of value-vs-index (which didn't
+   recur this session — first clean session on that front, worth confirming it holds
+   for 2 more before declaring it resolved per the Phase 0 gate rule).
 3. **Formal Methods, unfinished:** the De Morgan check (`¬(authenticated ∧ premium)`,
-   `¬(admin ∨ owner)`) was never answered before we pivoted to git setup. Close that,
-   then propositional logic is done — but note 17-614 is now running for real, so
-   coursework topics take precedence over this pre-arrival sequence.
-4. **Drill targets still active:** value-vs-index (4 recurrences — watch closely),
-   off-by-one, `int` vs `size_t`, affirming the consequent.
-5. **Deprioritized:** C++ Exercise 5 (`int**` dynamic append) — the concept it teaches
-   (manual pointer/heap/ownership mechanics) is now covered far better by 15-513's
-   malloc lab. Only return to it if a DSA problem exposes the gap sooner.
+   `¬(admin ∨ owner)`) was never answered before we pivoted to git setup. Close that
+   when 17-614 coursework has room — coursework outranks this pre-arrival sequence.
+4. **Deprioritized:** C++ Exercise 5 (`int**` dynamic append) — 15-513's malloc lab
+   covers this ground better. Only return to it if a DSA problem exposes the gap.
 
 ### 2026-05-27 — C/C++ — Pointers, references, Exercise 1 (swap)
 - **Covered:** value semantics (a variable IS a box, copying duplicates), references

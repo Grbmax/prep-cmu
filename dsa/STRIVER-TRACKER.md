@@ -53,7 +53,7 @@ language mechanic they force rather than for the algorithm.
 
 | # | Mechanic being rebuilt | Problem that forces it | Done | Date |
 |---|------------------------|------------------------|------|------|
-| 0.1 | `vector<int>`, indexed for-loop, `size_t` | Largest element in an array | [ ] | |
+| 0.1 | `vector<int>`, indexed for-loop, `size_t` | Largest element in an array | [x] | 2026-08-27 |
 | 0.2 | Two accumulators, the "pattern twin" check | Second largest without sorting | [ ] | |
 | 0.3 | Early return vs flag variable | Check if array is sorted | [ ] | |
 | 0.4 | Two-index write pointer (**value-vs-index drill**) | Remove duplicates from sorted array | [ ] | |
@@ -127,8 +127,8 @@ Most candidates are weak across Phase 3. Being solid here is the actual edge.
 
 | | Count |
 |---|---|
-| Phase 0 complete | 0 / 15 |
-| Sheet problems ticked | 2 / 455 |
+| Phase 0 complete | 1 / 15 |
+| Sheet problems ticked | 3 / 455 |
 | On the re-do list | 0 |
 
 Carried over from pre-semester: Two Sum sorted (two-pointer) and Two Sum unsorted
