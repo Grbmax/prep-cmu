@@ -3,28 +3,46 @@
 One entry per session. Most recent at the top. Be honest in the "Struggled" field —
 that field drives what we drill next.
 
-## Status board (update as tracks advance)
+> **Phase change, 2026-08-27.** The pre-arrival five-track plan is retired. Fall
+> semester is live: 15-513 replaced 15-640 (deferred), and DSA via the Striver A2Z
+> sheet became top priority against Summer 2027 recruiting. Distributed Systems and
+> Python/AI moved to `parked/`. History below is preserved unchanged — the drill
+> targets it identified are still active.
 
-| Track              | Current topic                  | Confidence (1-5) | Last touched |
-|--------------------|--------------------------------|------------------|--------------|
-| C/C++              | 01 Pointers & memory (Ex.1-2 done) | 3          | 2026-05-27   |
-| C systems          | not started                    | -                | -            |
-| Distributed Sys    | 01 Replication (not started)   | -                | -            |
-| Python for AI      | not started                    | -                | -            |
-| DSA in C++         | 01 Two pointers (Two Sum done) | 4                | 2026-06-19   |
-| Formal Methods     | 01 Propositional logic (in progress) | 3          | 2026-06-20   |
+## Status board
 
----
+| Track                        | Current position                          | Confidence (1-5) | Last touched |
+|------------------------------|-------------------------------------------|------------------|--------------|
+| **DSA — Striver A2Z (C++)**  | Step 3 Arrays — 2/455 (both Two Sum variants) | 2            | 2026-06-19   |
+| **15-513 Systems (C)**       | Not logged here yet — L0/L1 window is open | -                | -            |
+| **17-614 Formal Methods**    | Propositional logic — De Morgan check open | 3                | 2026-06-20   |
+| C++ fluency (supporting)     | Ex. 1-4 done; Ex. 5 (`int**` append) open  | 3                | 2026-05-27   |
+| ~~Distributed Systems~~      | parked — 15-640 deferred                   | -                | -            |
+| ~~Python for AI~~            | parked — semester 2                        | -                | -            |
+| ~~C systems (self-directed)~~| closed — superseded by 15-513              | -                | -            |
+
+## Active drill targets
+
+Carried forward from the log below. These do not clear until they stop recurring.
+
+1. **Value-vs-index** — 4 recurrences (Ex.2 max_elem, Ex.4, Two Sum sorted, Two Sum
+   unsorted). Highest-priority catch.
+2. **Off-by-one** (`<=` vs `<`) — plus the "pattern twin" habit: fix one loop, immediately
+   check its sibling.
+3. **`int` vs `size_t`** for indices; initialize-on-declare.
+4. **Affirming the consequent** (Formal Methods) — recognizing implication shapes across
+   negated phrasings.
 
 ## Entry template (copy this for each new session)
 
 ### YYYY-MM-DD — <Track> — <Topic>
 - **Covered:** what we worked through.
-- **Got right:** concepts/exercises landed cleanly.
+- **Got right:** concepts/exercises that landed cleanly.
 - **Struggled with:** where reasoning broke down, what hints were needed.
 - **Quiz result:** X/3 (gate to next topic).
 - **Revisit next session:** specific weak spots to re-drill.
 - **Complexity recall (DSA only):** time / space / variant discussed.
+- **Pattern named (DSA only):** and whether it went into `dsa/patterns/`.
 
 ---
 
@@ -146,18 +164,27 @@ that field drives what we drill next.
   no verbatim restatements, no closing recap fluff. Added [[feedback-token-economy]]
   memory + applied for the rest of the session.
 
-### >>> NEXT SESSION START HERE <<<
-- Finish De Morgan's check (`¬(authenticated ∧ premium)`, `¬(admin ∨ owner)`) — he
-  hadn't answered yet when we pivoted to git setup. Then propositional logic is
-  basically done; advance to predicate logic (∀, ∃) or pivot to next track.
-- Drill targets still active: value-vs-index (4 recurrences, watch closely),
-  off-by-one, `int` vs `size_t`. Affirming-the-consequent now also on the watch
-  list.
-- C++ side: Exercise 5 (`int**` dynamic append) still open — manual
-  `vector::push_back`. Welds together pointers, heap, ownership, off-by-one.
-- DSA side: pick next two-pointer problem when ready — Remove Duplicates from
-  Sorted Array (fast/slow same-direction) or Container With Most Water (greedy
-  converging).
+### >>> NEXT SESSION START HERE <<< (revised 2026-08-27)
+
+**Priority order has changed.** Recruiting clock now sets the agenda — see `ROADMAP.md`.
+
+1. **DSA first.** Open `dsa/README.md`, agree the C++ decision is final, then start
+   Striver Step 4 (Binary Search) — highest interview yield per problem on the sheet,
+   and you already have two-pointer basics banked. First target: the "binary search on
+   the answer" family, which is the sub-pattern most candidates never recognize.
+   Alternative if you want a gentler restart: finish Step 3 (Arrays) easies to rebuild
+   C++ typing speed first.
+2. **Bit manipulation early.** Striver Step 8 overlaps 15-513 Lab 1 (Data) directly.
+   Doing them in the same week is a free double-dip — schedule it now, not in Spring.
+3. **Formal Methods, unfinished:** the De Morgan check (`¬(authenticated ∧ premium)`,
+   `¬(admin ∨ owner)`) was never answered before we pivoted to git setup. Close that,
+   then propositional logic is done — but note 17-614 is now running for real, so
+   coursework topics take precedence over this pre-arrival sequence.
+4. **Drill targets still active:** value-vs-index (4 recurrences — watch closely),
+   off-by-one, `int` vs `size_t`, affirming the consequent.
+5. **Deprioritized:** C++ Exercise 5 (`int**` dynamic append) — the concept it teaches
+   (manual pointer/heap/ownership mechanics) is now covered far better by 15-513's
+   malloc lab. Only return to it if a DSA problem exposes the gap sooner.
 
 ### 2026-05-27 — C/C++ — Pointers, references, Exercise 1 (swap)
 - **Covered:** value semantics (a variable IS a box, copying duplicates), references

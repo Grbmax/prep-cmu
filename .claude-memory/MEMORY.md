@@ -5,4 +5,6 @@
 - [DSA pattern lens](feedback_dsa_pattern_lens.md) — after he solves it, show the idiomatic/competitive-optimized version + name the pattern.
 - [Error log + hurdle bank](feedback_error_log.md) — recurring logical/syntactical mistakes to drill, plus targeted hurdles for each pattern.
 - [Token economy](feedback_token_economy.md) — be terse: decide-and-propose instead of menus, no verbatim restatements, no closing recap fluff.
+- [Roadmap](../ROADMAP.md) — Fall 2026 course load, 15-513 lab calendar, and the Summer 2027 recruiting clock that sets priority order.
+- [Striver tracker](../dsa/STRIVER-TRACKER.md) — DSA progress; steps re-sequenced by interview yield, not sheet order.
 - [Git repo](reference_git_repo.md) — backed by `git@github.com:Grbmax/prep-cmu.git`; commit + push at every session-end automatically.
