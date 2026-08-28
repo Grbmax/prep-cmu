@@ -13,7 +13,7 @@ that field drives what we drill next.
 
 | Track                        | Current position                          | Confidence (1-5) | Last touched |
 |------------------------------|-------------------------------------------|------------------|--------------|
-| **DSA — Striver A2Z (C++)**  | Phase 0.2 done (second largest) — 4/455 sheet total | 2            | 2026-08-27   |
+| **DSA — Striver A2Z (C++)**  | Phase 0.3 done (check sorted) — 5/455 sheet total | 2            | 2026-08-27   |
 | **15-513 Systems (C)**       | Not logged here yet — L0/L1 window is open | -                | -            |
 | **17-614 Formal Methods**    | Propositional logic — De Morgan check open | 3                | 2026-06-20   |
 | C++ fluency (supporting)     | Ex. 1-4 done; Ex. 5 (`int**` append) open  | 3                | 2026-05-27   |
@@ -48,6 +48,21 @@ Carried forward from the log below. These do not clear until they stop recurring
 ---
 
 ## Log
+
+### 2026-08-27 (cont.) — DSA — Phase 0.3 — Check if array is sorted
+- **Covered:** early return vs. flag variable — same check, two shapes. Wrote it
+  with a flag+break first, correct on the first attempt with no bugs.
+- **Got right:** clean solve, no hint needed — first bug-free problem of the
+  session. O(n)/O(1) from memory. Correctly reasoned the strictly-increasing
+  variant needs `<` to become `<=` (not flipped to `>` — caught his own
+  misdirection on this after one clarifying question, didn't need it explained).
+  Rewrote flag+break into direct early-return himself once shown the shape.
+- **Struggled with:** nothing code-side. Momentary wrong instinct on the variant
+  (flipping the operator direction instead of loosening it) — self-corrected
+  immediately once asked to re-examine what the current condition catches.
+- **Quiz result:** 2/2 (complexity + variant, both correct after one nudge).
+- **Pattern named:** linear scan, early-exit. STL equivalent noted:
+  `is_sorted(begin, end)`.
 
 ### 2026-08-27 (cont.) — DSA — Phase 0.2 — Second largest without sorting
 - **Covered:** single-pass "running top-2": two accumulators seeded `INT_MIN`,
@@ -239,17 +254,18 @@ Carried forward from the log below. These do not clear until they stop recurring
   no verbatim restatements, no closing recap fluff. Added [[feedback-token-economy]]
   memory + applied for the rest of the session.
 
-### >>> NEXT SESSION START HERE <<< (revised 2026-08-27, post Phase 0.2)
+### >>> NEXT SESSION START HERE <<< (revised 2026-08-27, post Phase 0.3)
 
-1. **DSA — Phase 0.3.** `dsa/STRIVER-TRACKER.md` — "Check if array is sorted."
-   Mechanic: early return vs. flag variable.
-2. **New #1 target: trace-before-you-type.** 0.2 took ~8 attempts across 5 distinct
-   bugs, all in the same family — losing track of which variable captures which
-   value at which point in the control flow. Not a syntax gap anymore. Before he
-   runs the compiler on a non-trivial case, ask him to hand-trace it first.
-3. **`int` vs `size_t`** — didn't recur in 0.2 (clean session). Value-vs-index also
-   clean for 2 straight problems now. Both trending down; don't declare resolved
-   yet — Phase 0 gate requires 3 consecutive clean problems (see gate rule).
+1. **DSA — Phase 0.4.** `dsa/STRIVER-TRACKER.md` — "Remove duplicates from sorted
+   array." Mechanic: two-index write pointer — this is the value-vs-index drill
+   target's next real test, watch closely.
+2. **Trace-before-you-type** — still the standing target from 0.2's long bug hunt.
+   0.3 was clean on the first attempt, no trace needed, so no new evidence either
+   way yet.
+3. **`int` vs `size_t`** and **value-vs-index** — both clean for 3 straight problems
+   now (0.1 was the last size_t slip, value-vs-index hasn't recurred since the
+   pre-semester sessions). Getting close to the Phase 0 gate threshold — keep
+   watching but don't relax the check yet.
 3. **Formal Methods, unfinished:** the De Morgan check (`¬(authenticated ∧ premium)`,
    `¬(admin ∨ owner)`) was never answered before we pivoted to git setup. Close that
    when 17-614 coursework has room — coursework outranks this pre-arrival sequence.
