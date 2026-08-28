@@ -13,7 +13,7 @@ that field drives what we drill next.
 
 | Track                        | Current position                          | Confidence (1-5) | Last touched |
 |------------------------------|-------------------------------------------|------------------|--------------|
-| **DSA — Striver A2Z (C++)**  | Phase 0.3 done (check sorted) — 5/455 sheet total | 2            | 2026-08-27   |
+| **DSA — Striver A2Z (C++)**  | Phase 0.4 done (remove duplicates) — 6/455 sheet total | 2         | 2026-08-27   |
 | **15-513 Systems (C)**       | Not logged here yet — L0/L1 window is open | -                | -            |
 | **17-614 Formal Methods**    | Propositional logic — De Morgan check open | 3                | 2026-06-20   |
 | C++ fluency (supporting)     | Ex. 1-4 done; Ex. 5 (`int**` append) open  | 3                | 2026-05-27   |
@@ -48,6 +48,49 @@ Carried forward from the log below. These do not clear until they stop recurring
 ---
 
 ## Log
+
+### 2026-08-27 (cont.) — DSA — Phase 0.4 — Remove duplicates from sorted array
+- **Covered:** two-index write-pointer, in-place compaction on a sorted array.
+  Hand-traced `{0,1,1,2,3}` step by step before writing any code — the trace
+  itself went smoothly once slowed to one comparison per question; translating
+  it into working C++ was the actual struggle, across ~6 iterations.
+- **Got right:** correctly reasoned through the full by-hand trace including the
+  index-to-count `+1` conversion at the end. Root-caused the empty-array crash
+  himself once shown it was `write+1` applied even when nothing was ever
+  written. Correctly named the unsorted+order-preserving variant (hash set)
+  as the fallback — full circle back to his own initial pattern guess, which
+  was right for a *different* constraint than the one this problem had.
+- **Struggled with:** the core recurring bug across every attempt was **not
+  trusting the loop to do its own advancement.** Three separate manifestations:
+  (1) added an unused loop counter `i` instead of driving the loop off `read`
+  directly, causing an unchecked out-of-bounds read; (2) after fixing that,
+  added a *second*, manual `read++` inside the `if` branch on top of the
+  `for` loop's own increment — double-advanced on every duplicate, silently
+  skipping elements (`{0,1,2,3,4}` under-counted to `k=4`); (3) after tracing
+  it correctly by hand and knowing `write+1` was the right conversion, applied
+  it unconditionally and broke the empty-array case (`write` starts at `0`
+  regardless of whether anything was ever written). Also: a bare `return;` in
+  a function declared to return `int`/`size_t` — syntax slip, not conceptual.
+  `int`/`size_t` friction continued through the whole exercise (narrowing on
+  return, signedness on the driver's loop var) — this is now the single most
+  consistent recurring issue across all of Phase 0 so far.
+- **Quiz result:** 2/2 (O(n)/O(1) unprompted; unsorted variant correctly
+  identified with reasoning, not just a guess).
+- **Revisit next session:** the "trust the loop, don't add manual advancement
+  on top of it" pattern is the real lesson from 0.4, more specific than the
+  general "trace before typing" note from 0.2. When a loop variable already
+  drives iteration, adding any extra increment to that same variable inside
+  the loop body is very likely a bug — flag it as a reflex check on any
+  two-pointer/write-pointer problem going forward. `int` vs `size_t` should
+  probably get a fast, boring, 5-second drill at the start of the next 2-3
+  problems rather than being caught live each time.
+- **Pattern named:** two pointers, fast/slow geometry — already documented in
+  `patterns/01-two-pointers.md` (problem B, from the June Two Sum sessions), no
+  new note needed. Idiomatic version shown: `nums.erase(unique(nums.begin(),
+  nums.end()), nums.end())`.
+- **Process change:** going forward, driver test data is pre-populated when a
+  problem is scaffolded (student's request) — he writes only the solution
+  function, edge cases are chosen for him based on what the problem needs.
 
 ### 2026-08-27 (cont.) — DSA — Phase 0.3 — Check if array is sorted
 - **Covered:** early return vs. flag variable — same check, two shapes. Wrote it
@@ -254,18 +297,20 @@ Carried forward from the log below. These do not clear until they stop recurring
   no verbatim restatements, no closing recap fluff. Added [[feedback-token-economy]]
   memory + applied for the rest of the session.
 
-### >>> NEXT SESSION START HERE <<< (revised 2026-08-27, post Phase 0.3)
+### >>> NEXT SESSION START HERE <<< (revised 2026-08-27, post Phase 0.4)
 
-1. **DSA — Phase 0.4.** `dsa/STRIVER-TRACKER.md` — "Remove duplicates from sorted
-   array." Mechanic: two-index write pointer — this is the value-vs-index drill
-   target's next real test, watch closely.
-2. **Trace-before-you-type** — still the standing target from 0.2's long bug hunt.
-   0.3 was clean on the first attempt, no trace needed, so no new evidence either
-   way yet.
-3. **`int` vs `size_t`** and **value-vs-index** — both clean for 3 straight problems
-   now (0.1 was the last size_t slip, value-vs-index hasn't recurred since the
-   pre-semester sessions). Getting close to the Phase 0 gate threshold — keep
-   watching but don't relax the check yet.
+1. **DSA — Phase 0.5.** `dsa/STRIVER-TRACKER.md` — "Left-rotate array by one, then
+   by k." Mechanic: in-place swap, `std::swap`, reverse.
+2. **New #1 target: don't manually re-advance a variable the loop already
+   advances.** Bit twice in 0.4 alone (stray `i` counter, then a redundant manual
+   `read++` inside the loop body on top of the `for`'s own increment). Watch for
+   this specifically on any two-pointer/write-pointer problem.
+3. **`int` vs `size_t`** is now the most consistently recurring issue across all
+   of Phase 0 — present in every problem so far in some form (narrowing casts,
+   signed/unsigned comparisons). Consider a fast reflex drill at the start of
+   the next session rather than catching it live each time.
+4. **Value-vs-index** — still clean, no recurrence since pre-semester. Good sign,
+   keep watching per the Phase 0 gate (3 consecutive clean problems required).
 3. **Formal Methods, unfinished:** the De Morgan check (`¬(authenticated ∧ premium)`,
    `¬(admin ∨ owner)`) was never answered before we pivoted to git setup. Close that
    when 17-614 coursework has room — coursework outranks this pre-arrival sequence.
