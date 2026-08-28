@@ -13,7 +13,7 @@ that field drives what we drill next.
 
 | Track                        | Current position                          | Confidence (1-5) | Last touched |
 |------------------------------|-------------------------------------------|------------------|--------------|
-| **DSA — Striver A2Z (C++)**  | Phase 0.1 done (largest element) — 3/455 sheet total | 2            | 2026-08-27   |
+| **DSA — Striver A2Z (C++)**  | Phase 0.2 done (second largest) — 4/455 sheet total | 2            | 2026-08-27   |
 | **15-513 Systems (C)**       | Not logged here yet — L0/L1 window is open | -                | -            |
 | **17-614 Formal Methods**    | Propositional logic — De Morgan check open | 3                | 2026-06-20   |
 | C++ fluency (supporting)     | Ex. 1-4 done; Ex. 5 (`int**` append) open  | 3                | 2026-05-27   |
@@ -48,6 +48,49 @@ Carried forward from the log below. These do not clear until they stop recurring
 ---
 
 ## Log
+
+### 2026-08-27 (cont.) — DSA — Phase 0.2 — Second largest without sorting
+- **Covered:** single-pass "running top-2": two accumulators seeded `INT_MIN`,
+  demote-old-largest-to-second on a new max, guard so duplicates of the max don't
+  get counted as a distinct second-largest, then a post-loop check (`s_largest
+  still INT_MIN?`) to detect "no second largest exists" (all-same / single element).
+  Bug hunt was long and mostly self-driven — walked through 5 distinct bugs across
+  ~8 attempts before it was fully correct.
+- **Got right:** Big-O (O(n)/O(1)) unprompted. Root-caused the null-pointer/segfault
+  crash himself (missing `return` after the empty-array guard — a regression from
+  the pattern he'd used correctly in 0.1) after one Socratic question. Correctly
+  reasoned the k-th-largest variant needs a different structure (min-heap of size
+  k), unprompted.
+- **Struggled with (bug sequence, in order):**
+  1. Empty-array guard printed but didn't `return` — fell through into `nums[0]`,
+     segfault. Self-fixed after being asked to trace it.
+  2. Classic "lost the old max" bug: `largest` got overwritten on a new max but
+     nothing captured the outgoing value as the new `second` — so strictly
+     increasing arrays returned the *first* element as "second largest." Needed
+     a conceptual hint (trace `{1,2,3,4}` by hand) — self-corrected from there.
+  3. Seeded `second` to the same value as `largest` (or later, `0`) — failed on
+     descending/all-negative arrays where `largest` never changes after `i=0`, so
+     `second` never had a valid path to update. Needed a structural hint (fold
+     demotion into the `if`, seed with `INT_MIN`).
+  4. Misheard the structural hint as "remove the `else if` entirely" instead of
+     "add the demotion into the `if`, keep the `else if`" — dropped the branch
+     that catches descending values. This needed pseudocode (3rd ask on the same
+     mechanic, per the hint-escalation rule) to unstick.
+  5. For the all-same/no-second-largest case, put the "give up" check *inside* the
+     loop as a bare `else` — fired per-element instead of once for the whole
+     array, breaking otherwise-correct cases like `{1,2,4,4}`. Two-step fix: first
+     a conceptual hint (trace `{1,2,4,4}` through the new code), then a structural
+     hint (move the check to after the loop, test the sentinel once).
+- **Quiz result:** 2/2 complexity (O(n)/O(1)), correct k-th-largest variant answer
+  unprompted.
+- **Revisit next session:** the recurring shape across bugs 2-3-4 is losing track
+  of *which* variable should capture *which* outgoing value at *which* point in
+  the control flow — less a syntax gap now, more a "trace before you type" habit
+  gap. Consider requiring a hand-trace of one non-trivial test case (not the
+  happy path) before running the compiler, for the next few problems.
+- **Pattern named:** running top-2 (single-pass), generalizes to top-K via a
+  min-heap of size K — not yet written to `patterns/` (revisit once an actual
+  top-K problem is solved and the heap code exists to reference).
 
 ### 2026-08-27 — DSA — Phase 0.1 — Largest element in an array
 - **Covered:** first DSA session since 2026-06-20 (~2 month gap). Rebuilt Big-O from
@@ -196,15 +239,17 @@ Carried forward from the log below. These do not clear until they stop recurring
   no verbatim restatements, no closing recap fluff. Added [[feedback-token-economy]]
   memory + applied for the rest of the session.
 
-### >>> NEXT SESSION START HERE <<< (revised 2026-08-27, post Phase 0.1)
+### >>> NEXT SESSION START HERE <<< (revised 2026-08-27, post Phase 0.2)
 
-1. **DSA — Phase 0.2.** `dsa/STRIVER-TRACKER.md` — "Second largest without sorting."
-   Mechanic: two accumulators + the "pattern twin" check (fix one loop, immediately
-   check its sibling). Quiz Big-O and the `.size()` return type before starting —
-   both are now recovering but not yet automatic.
-2. **`int` vs `size_t` is the live #1 target**, ahead of value-vs-index (which didn't
-   recur this session — first clean session on that front, worth confirming it holds
-   for 2 more before declaring it resolved per the Phase 0 gate rule).
+1. **DSA — Phase 0.3.** `dsa/STRIVER-TRACKER.md` — "Check if array is sorted."
+   Mechanic: early return vs. flag variable.
+2. **New #1 target: trace-before-you-type.** 0.2 took ~8 attempts across 5 distinct
+   bugs, all in the same family — losing track of which variable captures which
+   value at which point in the control flow. Not a syntax gap anymore. Before he
+   runs the compiler on a non-trivial case, ask him to hand-trace it first.
+3. **`int` vs `size_t`** — didn't recur in 0.2 (clean session). Value-vs-index also
+   clean for 2 straight problems now. Both trending down; don't declare resolved
+   yet — Phase 0 gate requires 3 consecutive clean problems (see gate rule).
 3. **Formal Methods, unfinished:** the De Morgan check (`¬(authenticated ∧ premium)`,
    `¬(admin ∨ owner)`) was never answered before we pivoted to git setup. Close that
    when 17-614 coursework has room — coursework outranks this pre-arrival sequence.

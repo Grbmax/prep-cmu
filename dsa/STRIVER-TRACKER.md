@@ -54,7 +54,7 @@ language mechanic they force rather than for the algorithm.
 | # | Mechanic being rebuilt | Problem that forces it | Done | Date |
 |---|------------------------|------------------------|------|------|
 | 0.1 | `vector<int>`, indexed for-loop, `size_t` | Largest element in an array | [x] | 2026-08-27 |
-| 0.2 | Two accumulators, the "pattern twin" check | Second largest without sorting | [ ] | |
+| 0.2 | Two accumulators, the "pattern twin" check | Second largest without sorting | [x] | 2026-08-27 |
 | 0.3 | Early return vs flag variable | Check if array is sorted | [ ] | |
 | 0.4 | Two-index write pointer (**value-vs-index drill**) | Remove duplicates from sorted array | [ ] | |
 | 0.5 | In-place swap, `std::swap`, reverse | Left-rotate array by one, then by k | [ ] | |
@@ -127,8 +127,8 @@ Most candidates are weak across Phase 3. Being solid here is the actual edge.
 
 | | Count |
 |---|---|
-| Phase 0 complete | 1 / 15 |
-| Sheet problems ticked | 3 / 455 |
+| Phase 0 complete | 2 / 15 |
+| Sheet problems ticked | 4 / 455 |
 | On the re-do list | 0 |
 
 Carried over from pre-semester: Two Sum sorted (two-pointer) and Two Sum unsorted
@@ -140,6 +140,7 @@ Carried over from pre-semester: Two Sum sorted (two-pointer) and Two Sum unsorte
 |---------|------------------------|------|
 | Two pointers | sorted array + pair / triplet / range | `patterns/01-two-pointers.md` |
 | Hash-map complement | unsorted + "have I seen X before" | note not yet written |
+| Running top-K (single-pass) | need top-K without sorting; K=2 fixed vars, general K → min-heap size K | note not yet written |
 
 ## Re-do list
 
